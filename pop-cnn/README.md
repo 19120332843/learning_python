@@ -13,15 +13,6 @@ import torch.nn.init as init
 from torch.autograd import Variable
 ```
 
-$$
-\begin{equation}
-\begin{cases}
-eq1\\
-eq2
-\end{cases}
-\end{equation}
-$$
-
 ## 2. 归一化处理
 
 在这段程序中，先找出每一行（在这个数据集中，每一行为一个传感器采集的样本）的最大值`Zmax`、最小值`Zmin`和均值`Zmean`，然后将数据映射到[-1,1]->`Z = (Z - Zmean) / (Zmax - Zmin)`。
@@ -242,10 +233,12 @@ $$
 默认下，此函数输出为（`mean`）：
 $$
 l(x, y) = 
-\begin{cases}
+\begin{equation}
+\left \{
 mean(L)  & \quad \text{if } reduction \text{ is 'mean';}\\
 sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
-\end{cases}
+\right.
+\end{equation}
 $$
 
 由于直接使用`MSELoss()`，那么在`loss = loss_func(out, t_y)`之后，如果`print(loss)`的话，则这个loss是`mean(L)`，也就是：
