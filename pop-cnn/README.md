@@ -230,16 +230,7 @@ $$
 l(x, y) = L = \{l_{1}, \ldots ,l_{n}\},l_{n} = (x_{n} - y_{n})^{2}
 $$
 
-默认下，此函数输出为（`mean`）：
-
-$$ 
-\[ l(x, y) =
-  \begin{cases}
-    mean(L), & \quad \text{if reduction is 'mean'} \\
-    sum(L),  & \quad \text{if reduction is 'sum'}  
-  \end{cases}
-\]  
-$$
+默认下，此函数输出为[`mean`](https://pytorch.org/docs/stable/nn.html?highlight=mseloss#torch.nn.MSELoss)。
 
 由于直接使用`MSELoss()`，那么在`loss = loss_func(out, t_y)`之后，如果`print(loss)`的话，则这个loss是`mean(L)`，也就是：
 
