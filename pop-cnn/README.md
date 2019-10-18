@@ -234,10 +234,10 @@ $$
 $$
 l(x, y) = 
 \begin{cases}
-\begin{array}{rcl} 
+\left \{
 mean(L)  & \quad \text{if } reduction \text{ is 'mean';} \\
 sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
-\end{array}
+\right .
 \end{cases}
 $$
 
