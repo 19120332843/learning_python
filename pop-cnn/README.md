@@ -15,14 +15,11 @@ from torch.autograd import Variable
 
 $$
 \begin{equation}
-\left\{
-\begin{align} % \begin{eqnarray}好像也可以。
-x&=eq1\\
-y&=eq2
-\end{align}
-\right.
+\begin{cases}
+eq1\\
+eq2
+\end{cases}
 \end{equation}
-$$
 
 ## 2. 归一化处理
 
