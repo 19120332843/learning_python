@@ -13,6 +13,17 @@ import torch.nn.init as init
 from torch.autograd import Variable
 ```
 
+$$
+\begin{equation}
+\left\{
+\begin{align} % \begin{eqnarray}好像也可以。
+x&=eq1\\
+y&=eq2
+\end{align}
+\right.
+\end{equation}
+$$
+
 ## 2. 归一化处理
 
 在这段程序中，先找出每一行（在这个数据集中，每一行为一个传感器采集的样本）的最大值`Zmax`、最小值`Zmin`和均值`Zmean`，然后将数据映射到[-1,1]->`Z = (Z - Zmean) / (Zmax - Zmin)`。
