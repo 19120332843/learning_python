@@ -235,8 +235,8 @@ $$
 l(x, y) = 
 \begin{cases}
 \begin{array}{rcl} 
-mean(L)  & \quad \text{if } reduction \text{ is 'mean';} 
-\\sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
+mean(L)  & \quad \text{if } reduction \text{ is 'mean';} \\
+sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
 \end{array}
 \end{cases}
 $$
