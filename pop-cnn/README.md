@@ -20,6 +20,7 @@ eq1\\
 eq2
 \end{cases}
 \end{equation}
+$$
 
 ## 2. 归一化处理
 
