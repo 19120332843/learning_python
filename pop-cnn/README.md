@@ -234,10 +234,10 @@ $$
 $$
 \begin{equation}
 l(x, y) = 
-\left\{\begin{array}{rcl}
+\begin{array}{rcl}
 mean(L)  &  if  reduction is 'mean';} \\
 sum(L)   &  if  reduction is 'sum';}
-\end{array}\right.
+\end{array}
 \end{equation}
 $$
 
