@@ -233,12 +233,12 @@ $$
 默认下，此函数输出为（`mean`）：
 $$
 l(x, y) = 
-\begin{equation}
 \begin{cases}
-mean(L)  & \quad \text{if } reduction \text{ is 'mean';} \\
-sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
+\left\{
+mean(L)  & \quad \text{if } reduction \text{ is 'mean';} 
+\\sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
+\right.
 \end{cases}
-\end{equation}
 $$
 
 由于直接使用`MSELoss()`，那么在`loss = loss_func(out, t_y)`之后，如果`print(loss)`的话，则这个loss是`mean(L)`，也就是：
