@@ -271,3 +271,44 @@ $$
 
 ## 5. 参数初始化
 
+1. init.xavier_uniform_(m.weight)
+
+根据[pytorch介绍](https://pytorch.org/docs/stable/nn.init.html?highlight=xavier#torch.nn.init.xavier_uniform_)，这个函数使用均匀分布填充权值，来自[这篇论文](http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf)权值范围是：
+
+$$
+W \sim U \left [ -\frac{ \sqrt{6} }{ \sqrt{n_{j}+n_{j+1}} }, \frac{ \sqrt{6} }{ \sqrt{n_{j}+n_{j+1}} } \right ]
+$$
+
+所以pytorch包中：
+
+$$
+U(-a,a),a=gain*\sqrt{\frac{ 6 }{ fan\_in + fan\_out }}
+$$
+
+参数gain默认情况下为1，然后根据我的理解和参考[别人的代码](https://github.com/tostq/DeepLearningC)，应该是随机生成一个`[-1,1]`之间的数，并乘上这个a，`fan_in`和`fan_out`分别是输入层数和输出层数。
+
+2. init.normal_(m.weight, std=0.01)
+
+和上面的函数来自同一篇论文，[代码介绍](https://pytorch.org/docs/stable/nn.init.html?highlight=torch%20nn%20init%20normal_#torch.nn.init.normal_)。
+
+在论文中，有公式：
+
+$$
+Var \left [ W^{i} \right ] = \frac{2}{n_{i} + n_{i+1}}
+$$
+
+因此，在这里标准差为：
+
+$$
+std = gain* \sqrt{ \frac{2}{fan\_in + fan\_out} }
+$$
+
+3. init.constant_(m.bias, 0)
+
+[代码介绍](https://pytorch.org/docs/stable/nn.init.html?highlight=torch%20nn%20init%20constant#torch.nn.init.constant_)
+
+
+函数形式：`torch.nn.init.constant_(tensor, val)`
+
+就是用`val`来填充`tensor`。
+
