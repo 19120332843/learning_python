@@ -231,6 +231,7 @@ l(x, y) = L = \{l_{1}, \ldots ,l_{n}\},l_{n} = (x_{n} - y_{n})^{2}
 $$
 
 默认下，此函数输出为（`mean`）：
+
 $$
 l(x, y) =
 \begin{cases}
