@@ -102,7 +102,7 @@ def train(train_x,train_y,step=20):
       loss = loss_func(out, t_y)
       #梯度初始化为零
       optimizer.zero_grad()
-        
+
       #backward
       loss.backward()
       optimizer.step()
@@ -124,6 +124,7 @@ def forward(self, x):
   x = self.fc(x)
   return x
 ```
+
 卷积出来之后，进入relu激活函数，然后拉成一行，最后和进入全连接层。
 
 在此，我把每层的size打印出来：
@@ -142,7 +143,7 @@ def forward(self, x):
   print(x.size(1))
   print(x.size(2))
   print(x.size(3))
-  x = x.view(x.size(0), -1) 
+  x = x.view(x.size(0), -1)
   print(2)
   print(x.size(0))
   print(x.size(1))
@@ -206,7 +207,7 @@ $$
 在第二层网络中，卷积的个数又变多了，输入为6，输出为10，由于在第一层中，输出是6个`1*83`的二维数组，那么其实第二层的输出就是`6*1*83`的三维数组，那么每个第二层的卷积核进行卷积后输出。根据程老师的描述，我觉得公式应该是这样的：
 
 $$
-x_{ij}^{l} = f(u_{ij}^{l}) = f(\sum_{a=1}^{6}\sum_{p = 1}^{n}\sum_{q = 1}^{m}x_{i+p-1,j+q-1}^{l-1}*k_{pq}^{l} + b^{l}) 
+x_{ij}^{l} = f(u_{ij}^{l}) = f(\sum_{a=1}^{6}\sum_{p = 1}^{n}\sum_{q = 1}^{m}x_{i+p-1,j+q-1}^{l-1}*k_{pq}^{l} + b^{l})
 $$
 
 这里的`a`是上一层的输出，一共六个输出，然后每个输出和这一层的卷积核进行卷积之后相加之后输出。
@@ -218,7 +219,6 @@ $$
 首先，在所有应用问题中（不管是网络结构，训练手段如何变化）我们的目标是不会变的，那就是网络的权值和偏置最终都变成一个最好的值，这个值可以让我们由输入可以得到理想的输出，于是问题就变成了`y=f(x，w，b)`（x是输入，w是权值，b为偏置，所有这些量都可以有多个，比如多个`x1，x2，x3……`最后`f(·)`就好比我们的网络它一定可以用一个函数来表示，我们不需要知道`f(x)`具体是怎样的函数，从小我们就认为只要是函数就一定要是可表示的，像`f(x)=sin(x`)一样，但是请摈弃这样的错误观念，我们只需要知道一系列的`w`和`b`决定了一个函数`f（x`），这个函数让我们由输入可以计算出合理的`y`。
 
 在这里让`（y-t）^2`的值尽可能的小。于是原先的问题化为了`C（w，b）=（f（x，w，b）-t）^2`取到一个尽可能小的值。
-
 
 分3步
 
@@ -232,10 +232,12 @@ $$
 
 默认下，此函数输出为（`mean`）：
 $$
-l(x, y) = 
+l(x, y) =
 \begin{cases}
-mean(L), & \mbox{if reduction is 'mean'}   \\
+\left \{
+mean(L), & \mbox{if reduction is 'mean'} \\
 sum(L),  & \mbox{if reduction is 'sum'}
+\right.
 \end{cases}
 $$
 
@@ -262,8 +264,7 @@ $$
 v = -grad * lr
 $$
 
-
-但是有momentum时: 
+但是有momentum时:
 
 $$
 v = -grad * lr + v_{old} * momentum
@@ -307,8 +308,6 @@ $$
 
 [代码介绍](https://pytorch.org/docs/stable/nn.init.html?highlight=torch%20nn%20init%20constant#torch.nn.init.constant_)
 
-
 函数形式：`torch.nn.init.constant_(tensor, val)`
 
 就是用`val`来填充`tensor`。
-
