@@ -234,7 +234,7 @@ $$
 $$
 l(x, y) = 
 \begin{cases}
-\left \{
+\left {
 mean(L)  & \quad \text{if } reduction \text{ is 'mean';} \\
 sum(L)  & \quad \text{if } reduction \text{ is 'sum';}
 \right .
