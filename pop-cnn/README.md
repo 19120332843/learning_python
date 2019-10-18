@@ -235,10 +235,8 @@ $$
 $$
 l(x, y) =
 \begin{cases}
-\left \{
 mean(L), & \mbox{if reduction is 'mean'} \\
-sum(L),  & \mbox{if reduction is 'sum'}
-\right.
+sum(L),  & \mbox{if reduction is 'sum'}  \\
 \end{cases}
 $$
 
