@@ -227,7 +227,7 @@ $$
 在`out=cnn(t_x)`之后，`loss = loss_func(out, t_y)`，在这里，`loss_func = nn.MSELoss()`，公式为：
 
 $$
-l(x, y) = L = \{l_{1}, \ldots ,l_{n}\},l_{n} = (x_{n} - y_{n})^{2}
+l(x, y) = L = \{l_1, \ldots ,l_n\},l_{n} = (x_n - y_n)^2
 $$
 
 默认下，此函数输出为[`mean`](https://pytorch.org/docs/stable/nn.html?highlight=mseloss#torch.nn.MSELoss)。
@@ -235,7 +235,7 @@ $$
 由于直接使用`MSELoss()`，那么在`loss = loss_func(out, t_y)`之后，如果`print(loss)`的话，则这个loss是`mean(L)`，也就是：
 
 $$
-loss = \frac{ (x_{1} - y_{1})^{2} + (x_{2} - y_{2})^{2} + \ldots + x_{n} - y_{n})^{2} }{ n } ,(n = batchsize = 14)
+loss = \frac{ (x_1 - y_1)^2 + (x_2 - y_2)^2 + \ldots + x_n - y_n)^2 }{ n } ,(n = batchsize = 14)
 $$
 
 2. 计算梯度
@@ -268,7 +268,7 @@ $$
 根据[pytorch介绍](https://pytorch.org/docs/stable/nn.init.html?highlight=xavier#torch.nn.init.xavier_uniform_)，这个函数使用均匀分布填充权值，来自[这篇论文](http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf)权值范围是：
 
 $$
-W \sim U \left [ -\frac{ \sqrt{6} }{ \sqrt{n_{j}+n_{j+1}} }, \frac{ \sqrt{6} }{ \sqrt{n_{j}+n_{j+1}} } \right ]
+W \sim U \left [ -\frac{ \sqrt{6} }{ \sqrt{n_j+n_{j+1}} }, \frac{ \sqrt{6} }{ \sqrt{n_j+n_{j+1}} } \right ]
 $$
 
 所以pytorch包中：
@@ -286,7 +286,7 @@ $$
 在论文中，有公式：
 
 $$
-Var \left [ W^{i} \right ] = \frac{2}{n_{i} + n_{i+1}}
+Var \left [ W^i \right ] = \frac{2}{n_i + n_{i+1}}
 $$
 
 因此，在这里标准差为：
