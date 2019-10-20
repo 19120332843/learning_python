@@ -371,6 +371,10 @@ $$
 W8^{+} = 0.55 - 0.5 * 0.0174 * 0.3975 = 0.5465
 $$
 
+记输出误差为$\delta_{i} = out_{oi} - Oi$
+
+这么看得话，这一层gard的值，就是$\delta_{i} * out_{Hi}$。
+
 那么，如果去到W1呢，公式就是：
 
 $$
@@ -388,10 +392,41 @@ $$
 那么下面开始计算：
 
 $$
-\begin{align}
-\frac{\partial{L_{Loss1}}}{\partial{out_{H1}}} = \frac{\partial{L_{Loss1}}}{\partial{net_{O1}}} * \frac{\partial{net_{O1}}}{\partial{out_{H1}}} \\
-= 1  
-\end{align}
+\frac{\partial{L_{Loss1}}}{\partial{out_{H1}}} = \frac{\partial{L_{Loss1}}}{\partial{net_{O1}}} * \frac{\partial{net_{O1}}}{\partial{out_{H1}}} = \frac{\partial{L_{Loss1}}}{\partial{out_{O1}}} * \frac{\partial{out_{O1}}}{\partial{net_{O1}}} * \frac{\partial{net_{O1}}}{\partial{out_{H1}}} = 0.9199 * 1 * W5 = 0.9199 * 0.4 = 0.3680
+$$
+
+同理：
+
+$$
+\frac{\partial{L_{Loss2}}}{\partial{out_{H1}}} = \frac{\partial{L_{Loss2}}}{\partial{net_{O2}}} * \frac{\partial{net_{O2}}}{\partial{out_{H1}}} = \frac{\partial{L_{Loss2}}}{\partial{out_{O2}}} * \frac{\partial{out_{O2}}}{\partial{net_{O2}}} * \frac{\partial{net_{O2}}}{\partial{out_{H1}}} = 0.0174 * 1 * W7 = 0.0174 * 0.5 = 0.0087
+$$
+
+那么：
+
+$$
+\frac{\partial{L_{total}}}{\partial{W1}} = (0.3680 + 0.0087) * 1 * 0.05 = 0.0188
+$$
+
+最后更新W1的权值：
+
+$$
+W1^{+} = W1 - lr * \frac{\partial{L_{total}}}{\partial{W1}} = 0.15 - 0.5 * 0.0188 = 0.1406
+$$
+
+这一层gard的值，就是$(\sum\delta_{i} * W_{hi}) * Ii$。这里的$W_{Hi}$为每个输出节点到下一个节点的权值。
+
+同理：
+
+$$
+W2^{+} = W2 - lr * \frac{\partial{L_{total}}}{\partial{W2}} = 0.2 - 0.5 * (0.9199 * 0.4 + 0.0174 * 0.5) * 0.1 = 0.1812
+$$
+
+$$
+W3^{+} = W3 - lr * \frac{\partial{L_{total}}}{\partial{W3}} = 0.35 - 0.5 * (0.9199 * 0.45 + 0.0174 * 0.55) * 0.05 = 0.3394
+$$
+
+$$
+W4^{+} = W4 - lr * \frac{\partial{L_{total}}}{\partial{W4}} = 0.3 - 0.5 * (0.9199 * 0.45 + 0.0174 * 0.55) * 0.1 = 0.2788
 $$
 
 ## 5. 参数初始化
