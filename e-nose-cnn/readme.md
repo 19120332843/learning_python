@@ -28,6 +28,6 @@ zhike-枳壳
 
 ## 数据整理流程
 
-1. 把每个nos转为csv；
+1. 把每个nos转为csv,一定要加header；
 
-2. 把每个csv转置并合成一个csv；
+2. 把每个csv转置并合成一个csv，一定要加header；
