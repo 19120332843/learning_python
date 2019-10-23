@@ -31,3 +31,9 @@ zhike-枳壳
 1. 把每个nos转为csv,一定要加header；
 
 2. 把每个csv转置并合成一个csv，一定要加header；
+
+## pop-cnn
+
+在原来的基础上，改成分类
+
+1. 先把csv转成numpy想要的格式npy；
