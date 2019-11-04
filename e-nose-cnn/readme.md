@@ -87,3 +87,5 @@ Cost-sensitive learning of deep feature representations from imbalanced data.
 1. 先用cnn
 
 2. 然后看别人fpga做cnn的论文和代码，再决定是否使用cnn+svm
+
+3. 算法可以使用的方向是：预测精度达到90以上，预处理算法可以接受进来一个数据处理一个，不需要整体处理
