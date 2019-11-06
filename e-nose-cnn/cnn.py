@@ -31,31 +31,18 @@ def Normlize2(Z):
 
 
 def Data_Reading(Normalization=True):
-    trainset = np.load('F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\3\\trainset2.npy')
-    trainlabel = np.load('F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\trainlabel2.npy')
-    testset = np.load('F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\trainset2.npy')
-    testlabel = np.load('F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\trainlabel2.npy')
-    data = np.load('F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\dataset.npy')
-    label = np.load('F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\label.npy')
+    data = np.load('e-nose-cnn/codedata/3times/dataset.npy')
+    label = np.load('e-nose-cnn/codedata/3times/label.npy')
 
     # Normalization
-    # trainset = Normlize(trainset)
-    # testset = Normlize(testset)
     data = Normlize(data)
 
     # myself or auto
     if Normalization:
-        train_x = torch.from_numpy(trainset).type(torch.cuda.FloatTensor)
-        train_y = torch.from_numpy(trainlabel).type(torch.int64)#.int64
-        test_x = torch.from_numpy(testset).type(torch.cuda.FloatTensor)
-        test_y = torch.from_numpy(testlabel).type(torch.int64)
-    else:
         data = torch.from_numpy(data).type(torch.cuda.FloatTensor)
         label = torch.from_numpy(label).type(torch.int64)
 
     # reshape
-    # train_x = train_x.view(525, 1, 10, 120)
-    # test_x = test_x.view(175, 1, 10, 120)
     data = data.view(700, 1, 10, 120)
     
     data = data.cpu().numpy()
@@ -108,7 +95,7 @@ if __name__ == '__main__':
     optimizer = optim.SGD(cnn.parameters(), lr=lrr, momentum=0.8)#
     loss_func = nn.CrossEntropyLoss()#CrossEntropyLoss()
 
-    train_x, test_x, train_y, test_y = Data_Reading(Normalization=0)
+    train_x, test_x, train_y, test_y = Data_Reading(Normalization=1)
     train_y = train_y.squeeze()
     test_y = test_y.squeeze()
     train_x = train_x.to(device)
@@ -144,7 +131,6 @@ if __name__ == '__main__':
         predicted_train = torch.max(out.data, 1)[1]
         total_train = tr_y.size(0)#总数
         for j in range(tr_y.size(0)):
-            # print('j = {}, predicted:{}, corr:{}'.format(j, predicted_train[j], tr_y[j]))
             if predicted_train[j] == tr_y[j]:
                 sum += 1
         

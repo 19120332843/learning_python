@@ -1,42 +1,42 @@
 # e-nose cnn
 
-把以下四种数据放入pop-cnn，测试分类效果。
+## codedata
 
-binglang-槟榔
+### 3times
 
-gaoliangjiang-高良姜
+第三次整理数据而命名
 
-sharen-砂仁
+存放第三次整理数据的所有7类csv和最后的csv和标签
 
-zhike-枳壳
+```python
+#相对路径
+
+#数据集
+np.load('e-nose-cnn/codedata/3times/data.csv')
+np.load('e-nose-cnn/codedata/3times/dataset.npy')
+
+#标签
+np.load('e-nose-cnn/codedata/3times/label.xlsx')
+np.load('e-nose-cnn/codedata/3times/label.npy')
+```
 
 ## draw_test
 
-画图测试
+画图测试文件存放
+
+## net
+
+存放效果不错的网络，以testset的精度命名
 
 ## nos-data
 
 原始数据，其中，每个文件夹的1是训练集，2是测试集
-
-## train
-
-训练集
-
-## test
-
-测试集
 
 ## 数据整理流程
 
 1. 把每个nos转为csv,一定要加header；
 
 2. 把每个csv转置并合成一个csv，一定要加header；
-
-## pop-cnn
-
-在原来的基础上，改成分类
-
-1. 先把csv转成numpy想要的格式npy；
 
 ## 2019.10.29
 
