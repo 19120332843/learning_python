@@ -7,7 +7,7 @@ train_x = pd.read_csv( "F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\
 # test_x = pd.read_csv( "F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\3\\testset2.csv")
 # test_y = pd.read_excel( "F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\test_label2.xlsx")
 
-train_x = train_x.fillna(method='ffill')
+# train_x = train_x.fillna(method='ffill')
 # test_x = test_x.fillna(method='ffill')
 
 np.save('F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\dataset.npy', train_x)

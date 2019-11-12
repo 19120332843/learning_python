@@ -12,7 +12,7 @@ def listdir(path, list_name):  # 传入存储的list
             list_name.append(file_path)
 
 file_paths = []#F:\gitworkspace\python\e-nose-cnn\data
-listdir("F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\3\\train", file_paths)
+listdir("D:\\WeChat\\WeChat Files\\mzf14ihntts\\FileStorage\\File\\2019-11\\dataset\\train_set", file_paths)
 # print(file_paths)
 
 ##csv add hearder
@@ -21,7 +21,7 @@ data = pd.DataFrame(data)
 data = data.values
 data = list(map(list,zip(*data)))
 data = pd.DataFrame(data)
-data.to_csv(os.path.join("F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\3", "trainset2.csv"), encoding='utf_8_sig', index=False, header=0)
+data.to_csv(os.path.join("D:\\WeChat\\WeChat Files\\mzf14ihntts\\FileStorage\\File\\2019-11\\dataset", "test_set.csv"), encoding='utf_8_sig', index=False, header=0)
 
 for i in file_paths:
     try:
@@ -29,6 +29,6 @@ for i in file_paths:
         data = data.values
         data = list(map(list,zip(*data)))
         data = pd.DataFrame(data)
-        data.to_csv(os.path.join("F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\3", "trainset2.csv"), encoding='utf_8_sig',index=False, header=0, mode = 'a+') 
+        data.to_csv(os.path.join("D:\\WeChat\\WeChat Files\\mzf14ihntts\\FileStorage\\File\\2019-11\\dataset", "test_set.csv"), encoding='utf_8_sig',index=False, header=0, mode = 'a+') 
     except Exception as e:
         print(i)
