@@ -95,3 +95,42 @@ Cost-sensitive learning of deep feature representations from imbalanced data.
 cnn效果好好啊啊啊啊啊
 
 凉凉
+
+## 2019.11.13
+
+使用不同MobileNet的思想进行e-nose的cnn加速
+
+### 保存网络
+
+```python
+torch.save(net1, '7-net.pkl')  # 保存整个神经网络的结构和模型参数
+```
+
+### 下载网络
+
+```python
+net2 = torch.load('7-net.pkl')
+prediction = net2(x)
+```
+
+### 数据对比
+
+* 把所以数据以一个二维矩阵(即10* 120)的格式放进去之后，结果大概为：
+
+![1](./picture/1.png)
+
+精度大约为0.9428
+
+此时卷积核参数个数为：(10 x 3 x 6) + (1 x 4 x 10) = 220
+
+* 把数据折叠起来进行测试(即10* 1* 120)的格式放进去的时候，结果为：
+
+![2](./picture/2.png)
+
+此时，`init.normal_(m.weight, std=0.001)`
+
+`mobienet2pool3.pkl`精度为0.9314，网络输入输出为`10 -> 6 -> 10`，第一层为(1, 3)的卷积核，步长1，一个(1, 2)的池化；第二层为(1, 4)的卷积核，步长1，一个(1, 2)的池化。
+
+卷积核参数个数为：(1 x 3 x 6)+(1 x 4 x 10)= 58
+
+使用moblienet之后，卷积核权重参数个数为：(1 x 3 x 10) + 6 + (1 x 4 x 6) + 10 = 70数量远小于220

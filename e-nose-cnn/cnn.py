@@ -31,8 +31,8 @@ def Normlize2(Z):
 
 
 def Data_Reading(Normalization=True):
-    data = np.load('e-nose-cnn/codedata/3times/dataset.npy')
-    label = np.load('e-nose-cnn/codedata/3times/label.npy')
+    data = np.load('codedata/3times/dataset.npy')
+    label = np.load('codedata/3times/label.npy')
 
     # Normalization
     data = Normlize(data)
@@ -63,9 +63,9 @@ def Data_Reading(Normalization=True):
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(1,6,(3,3),stride=(1,1))#(10 - 3)/1+1=8 :（120 - 3）/1 + 1 = 118 
-        self.conv2 = nn.Conv2d(6,10,(4,4),stride=(2,1))#(8 - 4)/2+1 = 3 : (118-4)/1+1 = 115
-        self.fc1 = nn.Linear(10*3*115,7)#427
+        self.conv1 = nn.Conv2d(1,6,(10,3),stride=(1,1))#(10 - 3)/1+1=8 :（120 - 3）/1 + 1 = 118 
+        self.conv2 = nn.Conv2d(6,10,(1,4),stride=(1,1))#(8 - 4)/2+1 = 3 : (118-4)/1+1 = 115 (59 - 4)/1 + 1 = 56
+        self.fc1 = nn.Linear(10*28, 7)#427
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 init.xavier_uniform_(m.weight)
@@ -74,8 +74,8 @@ class Net(nn.Module):
                 init.normal_(m.weight, std=0.001)
     
     def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = F.relu(self.conv2(x))
+        x = F.max_pool2d(F.relu(self.conv1(x)), (1, 2))
+        x = F.max_pool2d(F.relu(self.conv2(x)), (1, 2))
         x = x.view(x.size(0), -1)
         x = self.fc1(x)
         return x#
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     cnn.to(device)
 
     #sgd -> stochastic gradient descent
-    lrr = 0.008
+    lrr = 0.01
     optimizer = optim.SGD(cnn.parameters(), lr=lrr, momentum=0.8)#
     loss_func = nn.CrossEntropyLoss()#CrossEntropyLoss()
 
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     batch_size = 21
     tr_x = Variable(train_x)
     tr_y = Variable(train_y)
-    for epoch in range(160):
+    for epoch in range(150):
         running_loss = 0.0
         for i in range(0,(int)(len(train_x)/batch_size)):
             t_x = Variable(train_x[i*batch_size:i*batch_size+batch_size])
@@ -137,10 +137,10 @@ if __name__ == '__main__':
         print('total_train:{}, accuracy:{}, sum:{}'.format(total_train, sum / total_train, sum))
         sum = 0
 
-        if (sum / total_train > 0.92) :
-            optimizer = optim.SGD(cnn.parameters(), lr=lrr/10, momentum=0.8/4)
-        elif (sum / total_train > 0.98) :
-            optimizer = optim.SGD(cnn.parameters(), lr=lrr/10/10, momentum=0)#momentum=0
+        if (sum / total_train > 0.90) :
+            optimizer = optim.SGD(cnn.parameters(), lr=lrr/10, momentum=0.8/2)
+        elif (sum / total_train > 0.95) :
+            optimizer = optim.SGD(cnn.parameters(), lr=lrr/10/10, momentum=0.8/2)#momentum=0
 
 
         print('Epoch[{}], loss: {:.8f}'.format(epoch + 1, running_loss))
@@ -160,6 +160,7 @@ if __name__ == '__main__':
         if(max < sum/total):
             max = sum/total
             maxepoch = epoch + 1
+            torch.save(cnn, './net/mobilenet2pool3.pkl')
         print('total:{}, accuracy:{}, sum:{}, max={}, maxepoch={}'.format(total, sum / total, sum, max, maxepoch))
         print('=============================================================================')
         sum = 0
