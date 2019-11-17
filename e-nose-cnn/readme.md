@@ -134,3 +134,11 @@ prediction = net2(x)
 卷积核参数个数为：(1 x 3 x 6)+(1 x 4 x 10)= 58
 
 使用moblienet之后，卷积核权重参数个数为：(1 x 3 x 10) + 6 + (1 x 4 x 6) + 10 = 70数量远小于220
+
+* 使用了深度可分离卷积 + h-swish激活pointwise convolution + relu6激活depthwise convolution
+
+![3](./picture/3.png)
+
+精度为0.9314，这差不多是mobilenetv3的架构
+
+在我使用的网络里面，不需要BN层，因为BN层之后精度反而下降了。具体可以看[cnndwBN.py](./cnndwBN.py)
