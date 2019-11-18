@@ -113,7 +113,15 @@ net2 = torch.load('7-net.pkl')
 prediction = net2(x)
 ```
 
+### 创新点
+
+1. 在e-nose中使用深度可分离卷积；
+
+2. 激活函数除4；
+
 ### 数据对比
+
+如果需要下载网络，一定要记下来网络。
 
 * 把所以数据以一个二维矩阵(即10* 120)的格式放进去之后，结果大概为：
 
@@ -127,9 +135,7 @@ prediction = net2(x)
 
 ![2](./picture/2.png)
 
-此时，`init.normal_(m.weight, std=0.001)`
-
-`mobienet2pool3.pkl`精度为0.9314，网络输入输出为`10 -> 6 -> 10`，第一层为(1, 3)的卷积核，步长1，一个(1, 2)的池化；第二层为(1, 4)的卷积核，步长1，一个(1, 2)的池化。
+精度为0.9314，网络输入输出为`10 -> 6 -> 10`，第一层为(1, 3)的卷积核，步长1，一个(1, 2)的池化；第二层为(1, 4)的卷积核，步长1，一个(1, 2)的池化。
 
 卷积核参数个数为：(1 x 3 x 6)+(1 x 4 x 10)= 58
 
@@ -142,3 +148,41 @@ prediction = net2(x)
 精度为0.9314，这差不多是mobilenetv3的架构
 
 在我使用的网络里面，不需要BN层，因为BN层之后精度反而下降了。具体可以看[cnndwBN.py](./cnndwBN.py)
+
+### 保存模型说明
+
+#### mobilenet1.pkl
+
+使用深度可分离卷积，使用交叉验证法，本次训练效果达到96%
+
+```python
+self.conv1d = nn.Conv2d(in_channels = 10, out_channels = 10, kernel_size = (1, 3), stride = 1, groups = 10)#(120 - 3)/1 + 1 = 118
+self.conv1p = nn.Conv2d(in_channels = 10, out_channels = 6, kernel_size = 1, stride = 1, groups = 1)
+self.hswish1 = hswish()
+self.conv2d = nn.Conv2d(in_channels = 6, out_channels = 6, kernel_size = (1, 4), stride = 1, groups = 6)#(59 - 4)/1 + 1 = 56
+self.conv2p = nn.Conv2d(in_channels = 6, out_channels = 10, kernel_size = 1, stride = 1, groups = 1)
+self.hswish2 = hswish()
+self.fc1 = nn.Linear(10*28, 7)#427
+
+lrr = 0.01
+mom = 0.95
+batch_size = 21
+
+ if (sum / total_train > 0.85) :
+    optimizer = optim.SGD(cnn.parameters(), lr=lrr/10, momentum=mom/4)
+elif (sum / total_train > 0.95) :
+    optimizer = optim.SGD(cnn.parameters(), lr=lrr/10/10, momentum=mom/4/4)
+```
+
+#### mobilenet2
+
+模型同上，效果0.9371，不同点：把除6变成除4，除法变成移位寄存器。
+
+```python
+class hswish(nn.Module):
+    def forward(self, x):
+        out = x * F.relu6(x + 3) / 4
+        return out
+```
+
+islide  ppt

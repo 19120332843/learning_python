@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import pandas as pd
 import torch
 import numpy as np
@@ -20,17 +21,7 @@ def Normlize(Z):
     Z = (Z - Zmean) / (Zmax - Zmin)
     return Z
 
-def Normlize2(Z):
-    Zmax, Zmin = Z.max(axis=1), Z.min(axis=1)
-    Zmean = Z.mean(axis=1)
-    #按列排序
-    Zmax, Zmin = Zmax.reshape(-1, 1), Zmin.reshape(-1, 1)
-    Zmean = Zmean.reshape(-1, 1)
-    Z = (Z - Zmin) / (Zmax - Zmin)
-    return Z
-
-
-def Data_Reading(Normalization=True):
+def Data_Reading(Normalization=True): 
     data = np.load('codedata/3times/dataset.npy')
     label = np.load('codedata/3times/label.npy')
 
@@ -61,18 +52,16 @@ def Data_Reading(Normalization=True):
 
 class hswish(nn.Module):
     def forward(self, x):
-        out = x * F.relu6(x + 3, inplace = True) / 6
+        out = x * F.relu6(x + 3) / 4
         return out
 
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.conv1d = nn.Conv2d(in_channels = 10, out_channels = 10, kernel_size = (1, 3), stride = 1, groups = 10)#(120 - 3)/1 + 1 = 118 
-        # self.hswish3 = hswish()
         self.conv1p = nn.Conv2d(in_channels = 10, out_channels = 6, kernel_size = 1, stride = 1, groups = 1)
         self.hswish1 = hswish()
         self.conv2d = nn.Conv2d(in_channels = 6, out_channels = 6, kernel_size = (1, 4), stride = 1, groups = 6)#(59 - 4)/1 + 1 = 56
-        # self.hswish4 = hswish()
         self.conv2p = nn.Conv2d(in_channels = 6, out_channels = 10, kernel_size = 1, stride = 1, groups = 1)
         self.hswish2 = hswish()
         self.fc1 = nn.Linear(10*28, 7)#427
@@ -98,7 +87,7 @@ class Net(nn.Module):
         x = self.fc1(x)
         return x#
 
-
+ 
 if __name__ == '__main__':
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")#cuda:0
 
@@ -110,7 +99,7 @@ if __name__ == '__main__':
 
     #sgd -> stochastic gradient descent
     lrr = 0.01
-    mom = 0.95
+    mom = 0.9
     optimizer = optim.SGD(cnn.parameters(), lr=lrr, momentum=mom)#
     loss_func = nn.CrossEntropyLoss()#CrossEntropyLoss()
 
@@ -127,11 +116,10 @@ if __name__ == '__main__':
     #train
     sum = 0
     max = 0
-    
     batch_size = 21
     tr_x = Variable(train_x)
     tr_y = Variable(train_y)
-    for epoch in range(300):
+    for epoch in range(200):
         running_loss = 0.0
         for i in range(0,(int)(len(train_x)/batch_size)):
             t_x = Variable(train_x[i*batch_size:i*batch_size+batch_size])
@@ -143,7 +131,7 @@ if __name__ == '__main__':
             optimizer.step()
 
             running_loss += loss.item()
-   
+
         running_loss = running_loss / 25
 
         out = cnn(tr_x)
