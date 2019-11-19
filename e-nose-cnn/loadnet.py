@@ -23,12 +23,12 @@ def hswish(x):
     return out
 
 def my(x):
-    out = x * F.relu6(x + 3) / 4
+    out = x * F.relu(x + 4) / 8
     return out
 
 m = nn.ReLU6()
 
-x = np.linspace(-20, 20, 1000)
+x = np.linspace(-8, 8, 1000)
 x = torch.from_numpy(x).type(torch.FloatTensor)
 y1 = hswish(x)
 y2 = m(x)
