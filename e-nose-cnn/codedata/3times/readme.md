@@ -6,4 +6,4 @@
 
 3. `label.xlsx`是标签；
 
-4. 两个`*.npy`是numpy格式的文件，`dataset.npy`由`data.csv`转的，`label.npy`由`label.xlsx`转的；
+4. 两个`*.npy`是numpy格式的文件，`dataset.npy`由`data.csv`转的，`label.npy`由`label.xlsx`转的，具体怎么转的可以看`\learning_python\e-nose-cnn\datareading.py`；
