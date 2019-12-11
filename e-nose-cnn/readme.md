@@ -220,3 +220,5 @@ x = F.max_pool2d(x, (1, 2))
 x = x.view(x.size(0), -1)
 x = self.fc1(x)
 ```
+
+效果如cnndw.txt
