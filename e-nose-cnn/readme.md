@@ -182,6 +182,8 @@ elif (sum / total_train > 0.95) :
 
 模型同上，效果0.9371，不同点：把除6变成除4，除法变成移位寄存器。
 
+使用的是relu6
+
 ```python
 class hswish(nn.Module):
     def forward(self, x):
@@ -189,4 +191,32 @@ class hswish(nn.Module):
         return out
 ```
 
-islide  ppt
+#### mobilenetmy
+
+模型同上，效果0.92，不同点:把hswish中的relu6改为relu
+
+```python
+class hswish(nn.Module):
+    def forward(self, x):
+        out = x * F.relu(x + 3) / 4
+        return out
+```
+
+#### mobilenetmy1
+
+模型同上，效果0.9257，但是relu6改为relu
+
+```python
+x = self.conv1d(x)
+x = F.relu(x)
+x = self.conv1p(x)
+x = self.hswish1(x)
+x = F.max_pool2d(x, (1, 2))
+x = self.conv2d(x)
+x = F.relu(x)
+x = self.conv2p(x)
+x = self.hswish2(x)
+x = F.max_pool2d(x, (1, 2))
+x = x.view(x.size(0), -1)
+x = self.fc1(x)
+```

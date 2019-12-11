@@ -52,7 +52,7 @@ def Data_Reading(Normalization=True):
 
 class hswish(nn.Module):
     def forward(self, x):
-        out = x * F.relu6(x + 3) / 4
+        out = x * F.relu(x + 3) / 4
         return out
 
 class Net(nn.Module):
@@ -74,12 +74,12 @@ class Net(nn.Module):
     
     def forward(self, x):
         x = self.conv1d(x)
-        x = F.relu6(x)
+        x = F.relu(x)
         x = self.conv1p(x)
         x = self.hswish1(x)
         x = F.max_pool2d(x, (1, 2))
         x = self.conv2d(x)
-        x = F.relu6(x)
+        x = F.relu(x)
         x = self.conv2p(x)
         x = self.hswish2(x)
         x = F.max_pool2d(x, (1, 2))
@@ -167,7 +167,7 @@ if __name__ == '__main__':
         if(max < sum/total):
             max = sum/total
             maxepoch = epoch + 1
-            torch.save(cnn, './net/mobilenet.pkl')
+            torch.save(cnn, './net/mobilenetmy1.pkl')
         print('total:{}, accuracy:{}, sum:{}, max={}, maxepoch={}'.format(total, sum / total, sum, max, maxepoch))
         print('=============================================================================')
         sum = 0

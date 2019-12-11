@@ -12,18 +12,18 @@ from cnndw import Net
 from cnndw import hswish
 import matplotlib.pyplot as plt
 
-# cnn = Net()
-# cnn = torch.load('./net/mobilenet1.pkl')
-# print(cnn)
-# for i in cnn.parameters():
-#     print(i)
+cnn = Net()
+cnn = torch.load('./net/mobilenet1.pkl')
+print(cnn)
+for i in cnn.parameters():
+    print(i)
 
 def hswish(x):
     out = x * F.relu6(x + 3, inplace = True) / 6
     return out
 
 def my(x):
-    out = x * F.relu(x + 4) / 8
+    out = F.relu(x + 4) / 2
     return out
 
 m = nn.ReLU6()
