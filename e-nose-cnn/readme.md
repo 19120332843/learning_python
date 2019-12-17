@@ -222,3 +222,20 @@ x = self.fc1(x)
 ```
 
 效果如cnndw.txt
+
+#### mobilenetalrelu
+
+实际和名字有所不同，这是把第二层卷积核再一次压缩为：
+
+```python
+self.conv2d = nn.Conv2d(in_channels = 6, out_channels = 6, kernel_size = (1, 2), stride = 1, groups = 6)
+```
+
+同时加入了学习率调整：
+
+```python
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones = [150,175], gamma=0.1)
+scheduler.step()
+```
+
+最终效果如mobilenetallrelu.txt，到达0.9257
