@@ -223,7 +223,7 @@ x = self.fc1(x)
 
 效果如cnndw.txt
 
-#### mobilenetalrelu
+#### mobilenetallrelu
 
 实际和名字有所不同，这是把第二层卷积核再一次压缩为：
 

@@ -27,7 +27,8 @@ def Data_Reading(Normalization=True):
 
     # Normalization
     data = Normlize(data)
-
+    # np.savetxt("new.csv", data, delimiter=',')
+    print(data)
     # myself or auto
     if Normalization:
         data = torch.from_numpy(data).type(torch.cuda.FloatTensor)
@@ -40,14 +41,12 @@ def Data_Reading(Normalization=True):
     label = label.numpy()    
     train_x, test_x, train_y, test_y = train_test_split(data, label, test_size=0.25) 
     train_x = torch.from_numpy(train_x).type(torch.cuda.FloatTensor)
+    print(train_x)
     test_x = torch.from_numpy(test_x).type(torch.cuda.FloatTensor)
+    print(test_x)
     train_y = torch.from_numpy(train_y).type(torch.int64)
     test_y = torch.from_numpy(test_y).type(torch.int64)
 
-    # permutation = np.random.permutation(train_y.shape[0])
-    # train_x = train_x[permutation, :, :, :]
-    # print('---------------------------------------------------------------------------')
-    # train_y = train_y[permutation]
     return train_x, test_x, train_y, test_y
 
 class hswish(nn.Module):
