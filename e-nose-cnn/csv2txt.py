@@ -18,7 +18,7 @@ print(type(arr_file))
 arr_file = arr_file.reshape(-1)
 print(type(arr_file))
 print(len(arr_file))
-
+print(len(arr_file))
 
 file = open(".\\codedata\\3times\\new1.txt", "w")
 for i in range(int(len(arr_file))):
