@@ -9,17 +9,8 @@ from torch.autograd import Variable
 import sys
 sys.path.append(r"F:\gitworkspace\python\e-nose-cnn")
 from cnndw import Net
-from cnndw import hswish
-import matplotlib.pyplot as plt
-
-def Normlize(Z):
-    Zmax, Zmin = Z.max(axis=1), Z.min(axis=1)
-    Zmean = Z.mean(axis=1)
-    #按列排序
-    Zmax, Zmin = Zmax.reshape(-1, 1), Zmin.reshape(-1, 1)
-    Zmean = Zmean.reshape(-1, 1)
-    Z = (Z - Zmean) / (Zmax - Zmin)
-    return Z
+# from cnndw import hswish
+# import matplotlib.pyplot as plt
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")#cuda:0
 cnn = Net()
