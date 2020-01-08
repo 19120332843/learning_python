@@ -6,7 +6,7 @@ np.set_printoptions(suppress=True)
 np.set_printoptions(precision=4)
 list_file = []
 # 输入数据，700*10*120
-data = np.load('codedata/3times/label.npy')
+data = np.load('codedata/3times/new.npy')
 
 #逐行读取Excel文件中的每一行append列表中
 for one_line in data:   
