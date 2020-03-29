@@ -34,12 +34,12 @@ def L(a,n):
     # print(lx)
     f = F(a, n)
     # print(f)
-    print(Matrix(n, n, lambda i,j: lx[i, 0].nth(j)/f[i]))
+    # print(Matrix(n, n, lambda i,j: lx[i, 0].nth(j)/f[i]))
     return Matrix(n, n, lambda i,j: lx[i, 0].nth(j)/f[i]).T
 
 def Bt(a,n):
-    print(L(a,n))
-    print(T(a,n))
+    # print(L(a,n))
+    # print(T(a,n))
     return L(a,n)*T(a,n)
 
 def B(a,n):

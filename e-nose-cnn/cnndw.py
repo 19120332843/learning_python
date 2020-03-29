@@ -36,7 +36,7 @@ def Data_Reading(Normalization=True):
 
     # reshape
     data = data.view(700, 10, 1, 120)
-    
+    # data = data.view(700, 3, 288, 288)
     data = data.cpu().numpy()
     label = label.numpy()    
     train_x, test_x, train_y, test_y = train_test_split(data, label, test_size=0.25) 
@@ -63,7 +63,7 @@ class Net(nn.Module):
         self.conv2d = nn.Conv2d(in_channels = 6, out_channels = 6, kernel_size = (1, 2), stride = 1, groups = 6)#(59 - 2)/1 + 1 = 58
         self.conv2p = nn.Conv2d(in_channels = 6, out_channels = 10, kernel_size = 1, stride = 1, groups = 1)
         self.hswish2 = hswish()
-        self.fc1 = nn.Linear(10*29, 7)#427
+        self.fc1 = nn.Linear(10*29, 7)#10*29是一个样本最后出来的数据量的个数,7--分7类
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 init.xavier_uniform_(m.weight)
@@ -72,17 +72,25 @@ class Net(nn.Module):
                 init.normal_(m.weight, std=0.001)
     
     def forward(self, x):
+        #10*1*120
         x = self.conv1d(x)
         x = F.relu(x)
+        #10*1*118
         x = self.conv1p(x)
         x = self.hswish1(x)
+        #6*1*118
         x = F.max_pool2d(x, (1, 2))
+        #6*1*59
         x = self.conv2d(x)
         x = F.relu(x) 
+        #6*1*58
         x = self.conv2p(x)      
-        x = self.hswish2(x)     
+        x = self.hswish2(x) 
+        #10*1*58    
         x = F.max_pool2d(x, (1, 2))
+        #10*1*29
         x = x.view(x.size(0), -1)
+        #290
         x = self.fc1(x)
         return x#
 
