@@ -22,8 +22,8 @@ def Normlize(Z):
     return Z
 
 def Data_Reading(Normalization=True): 
-    data = np.load('codedata/3times/dataset.npy')
-    label = np.load('codedata/3times/label.npy')
+    data = np.load('codedata//3times//dataset.npy')
+    label = np.load('codedata//3times//label.npy')
 
     # Normalization
     data = Normlize(data)
