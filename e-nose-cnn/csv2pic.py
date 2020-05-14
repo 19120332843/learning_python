@@ -3,21 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-csv1 = ["F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\train\\32\\gaoliangjiang-61.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\train\\32\\gaoliangjiang-62.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\nos-data\\3times7class\\train\\32\\gaoliangjiang-63.csv"]
-
-#F:\gitworkspace\python\e-nose-cnn\train\all_csv\4\麸炒枳壳20150201江西0001.nos-test.csv
-csv2 = ["F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\4\\麸炒枳壳20140905江西樟树0003.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\4\\麸炒枳壳150901江西亳州0001.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\4\\麸炒枳壳15127江西永康0001.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\4\\0011.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\4\\麸炒枳壳20150201江西0001.nos-test.csv"]
-
-#F:\gitworkspace\python\e-nose-cnn\train\all_csv\1\a-40004.nos-test.csv
-csv3 = ["F:\\gitworkspace\\python\\e-nose-cnn\\test\\all_csv\\1\\a-40005.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\test\\all_csv\\1\\a-40006.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\1\\a-40001.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\1\\a-40002.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\1\\a-40003.nos-test.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\train\\all_csv\\1\\a-40004.nos-test.csv"]
-# print(csv1)
+csv1 = ["codedata/3times/csv/binglang-0.csv", "codedata/3times/csv/binglang-1.csv", "codedata/3times/csv/binglang-2.csv"]
 
 def Normlize(Z):
     Zmax, Zmin = Z.max(axis=0), Z.min(axis=0)
     Zmean = Z.mean(axis=0)
-    #按列排序
-    # Zmax, Zmin = Zmax.view(-1, 1), Zmin.view(-1, 1)
-    # Zmean = Zmean.reshape(-1, 1)
     Z = (Z - Zmean) / (Zmax - Zmin)
     return Z
 
@@ -34,7 +24,7 @@ file_paths = []
 listdir("F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\csv", file_paths)
 # print(file_paths)
 
-for i in file_paths[4*100:5*100]:
+for i in csv1:
     pic = pd.read_csv(i)
     # pic1 = Normlize(pic)
 
