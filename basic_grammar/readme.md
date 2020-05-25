@@ -106,3 +106,5 @@ print()
 3. 从某个模块中导入多个函数,格式为： `from somemodule import firstfunc, secondfunc, thirdfunc`
 4. 将某个模块中的全部函数导入，格式为： `from somemodule import *`
    
+## [命令行参数](https://www.runoob.com/python3/python3-command-line-arguments.html)
+
