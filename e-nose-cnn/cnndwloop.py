@@ -48,7 +48,7 @@ def Data_Reading(Normalization=True):
 
 class hswish(nn.Module):
     def forward(self, x):
-        out = x * F.relu(x + 4) / 4
+        out = x * F.relu(x + 3) / 4
         return out
 
 class Net(nn.Module):
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     mom = 0.8
     optimizer = optim.SGD(cnn.parameters(), lr=lrr, momentum=mom)#
     # scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', factor=0.1, threshold = 0.05, patience=30, min_lr = 0.0001)
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones = [150,180], gamma=0.1)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones = [200,260], gamma=0.1)
     loss_func = nn.CrossEntropyLoss()#CrossEntropyLoss()
 
     train_x, test_x, train_y, test_y = Data_Reading(Normalization=1)
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     batch_size = 21
     tr_x = Variable(train_x)
     tr_y = Variable(train_y)
-    for epoch in range(200):
+    for epoch in range(300):
         running_loss = 0.0
         for i in range(0,(int)(len(train_x)/batch_size)):
             t_x = Variable(train_x[i*batch_size:i*batch_size+batch_size])
@@ -166,7 +166,7 @@ if __name__ == '__main__':
         if(max < sum/total):
             max = sum/total
             maxepoch = epoch + 1
-            torch.save(cnn, './net/mobilenet226.pkl')
+            torch.save(cnn, './net/mobilenet523.pkl')
         # print('total:{}, accuracy:{}, sum:{}, max={}, maxepoch={}'.format(total, sum / total, sum, max, maxepoch))
         # print('=============================================================================')
         sum = 0

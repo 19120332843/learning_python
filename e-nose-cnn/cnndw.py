@@ -28,7 +28,7 @@ def Data_Reading(Normalization=True):
     # Normalization
     data = Normlize(data)
     # np.savetxt("new.csv", data, delimiter=',')
-    print(data)
+    # print(data)
     # myself or auto
     if Normalization:
         data = torch.from_numpy(data).type(torch.cuda.FloatTensor)
@@ -41,9 +41,9 @@ def Data_Reading(Normalization=True):
     label = label.numpy()    
     train_x, test_x, train_y, test_y = train_test_split(data, label, test_size=0.25) 
     train_x = torch.from_numpy(train_x).type(torch.cuda.FloatTensor)
-    print(train_x)
+    # print(train_x)
     test_x = torch.from_numpy(test_x).type(torch.cuda.FloatTensor)
-    print(test_x)
+    # print(test_x)
     train_y = torch.from_numpy(train_y).type(torch.int64)
     test_y = torch.from_numpy(test_y).type(torch.int64)
 
@@ -51,7 +51,7 @@ def Data_Reading(Normalization=True):
 
 class hswish(nn.Module):
     def forward(self, x):
-        out = x * F.relu(x + 4) / 4
+        out = F.relu(x + 3) / 2
         return out
 
 class Net(nn.Module):
@@ -175,7 +175,7 @@ if __name__ == '__main__':
         if(max < sum/total):
             max = sum/total
             maxepoch = epoch + 1
-            torch.save(cnn, './net/mobilenet226.pkl')
+            torch.save(cnn, './net/mobilenet523.pkl')
         print('total:{}, accuracy:{}, sum:{}, max={}, maxepoch={}'.format(total, sum / total, sum, max, maxepoch))
         print('=============================================================================')
         sum = 0

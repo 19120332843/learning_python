@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-csv1 = ["codedata/3times/csv/binglang-0.csv", "codedata/3times/csv/binglang-1.csv", "codedata/3times/csv/binglang-2.csv"]
+csv1 = ["codedata/3times/csv/binglang-0.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\csv\\zhike-37.csv", "F:\\gitworkspace\\python\\e-nose-cnn\\codedata\\3times\\csv\\sharen-89.csv"]
 
 def Normlize(Z):
     Zmax, Zmin = Z.max(axis=0), Z.min(axis=0)
