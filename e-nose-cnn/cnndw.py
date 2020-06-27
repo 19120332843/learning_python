@@ -27,31 +27,24 @@ def Data_Reading(Normalization=True):
 
     # Normalization
     data = Normlize(data)
-    # np.savetxt("new.csv", data, delimiter=',')
-    # print(data)
-    # myself or auto
     if Normalization:
         data = torch.from_numpy(data).type(torch.cuda.FloatTensor)
         label = torch.from_numpy(label).type(torch.int64)
 
     # reshape
     data = data.view(700, 10, 1, 120)
-    # data = data.view(700, 3, 288, 288)
     data = data.cpu().numpy()
     label = label.numpy()    
     train_x, test_x, train_y, test_y = train_test_split(data, label, test_size=0.25) 
     train_x = torch.from_numpy(train_x).type(torch.cuda.FloatTensor)
-    # print(train_x)
     test_x = torch.from_numpy(test_x).type(torch.cuda.FloatTensor)
-    # print(test_x)
     train_y = torch.from_numpy(train_y).type(torch.int64)
     test_y = torch.from_numpy(test_y).type(torch.int64)
-
     return train_x, test_x, train_y, test_y
 
 class hswish(nn.Module):
     def forward(self, x):
-        out = F.relu(x + 3) / 2
+        out = x * F.relu(x + 3) / 4
         return out
 
 class Net(nn.Module):
@@ -107,10 +100,9 @@ if __name__ == '__main__':
 
     #sgd -> stochastic gradient descent
     lrr = 0.01
-    mom = 0.85
+    mom = 0.9
     optimizer = optim.SGD(cnn.parameters(), lr=lrr, momentum=mom)#
-    # scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', factor=0.1, threshold = 0.05, patience=30, min_lr = 0.0001)
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones = [150,180], gamma=0.1)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones = [200,260], gamma=0.1)
     loss_func = nn.CrossEntropyLoss()#CrossEntropyLoss()
 
     train_x, test_x, train_y, test_y = Data_Reading(Normalization=1)
@@ -129,7 +121,7 @@ if __name__ == '__main__':
     batch_size = 21
     tr_x = Variable(train_x)
     tr_y = Variable(train_y)
-    for epoch in range(200):
+    for epoch in range(300):
         running_loss = 0.0
         for i in range(0,(int)(len(train_x)/batch_size)):
             t_x = Variable(train_x[i*batch_size:i*batch_size+batch_size])
@@ -154,7 +146,6 @@ if __name__ == '__main__':
         print('total_train:{}, accuracy:{}, sum:{}'.format(total_train, sum / total_train, sum))
         sum = 0
 
-        # scheduler.step(running_loss)
         scheduler.step()
 
         print('Epoch[{}], loss: {:.8f}'.format(epoch + 1, running_loss))
@@ -175,7 +166,7 @@ if __name__ == '__main__':
         if(max < sum/total):
             max = sum/total
             maxepoch = epoch + 1
-            torch.save(cnn, './net/mobilenet523.pkl')
+            torch.save(cnn, './net/mobilenet627.pkl')
         print('total:{}, accuracy:{}, sum:{}, max={}, maxepoch={}'.format(total, sum / total, sum, max, maxepoch))
         print('=============================================================================')
         sum = 0

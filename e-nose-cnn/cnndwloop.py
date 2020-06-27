@@ -100,9 +100,8 @@ if __name__ == '__main__':
     lrr = 0.01
     mom = 0.8
     optimizer = optim.SGD(cnn.parameters(), lr=lrr, momentum=mom)#
-    # scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', factor=0.1, threshold = 0.05, patience=30, min_lr = 0.0001)
     scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones = [200,260], gamma=0.1)
-    loss_func = nn.CrossEntropyLoss()#CrossEntropyLoss()
+    loss_func = nn.CrossEntropyLoss()
 
     train_x, test_x, train_y, test_y = Data_Reading(Normalization=1)
     train_y = train_y.squeeze()
@@ -170,6 +169,7 @@ if __name__ == '__main__':
         # print('total:{}, accuracy:{}, sum:{}, max={}, maxepoch={}'.format(total, sum / total, sum, max, maxepoch))
         # print('=============================================================================')
         sum = 0
+
     if(max >= 0.9):
       maxnum = maxnum + 1
     print('|{}|{}|{}|{}|'.format(i, max, maxepoch, maxnum))
